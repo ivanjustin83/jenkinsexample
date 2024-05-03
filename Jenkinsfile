@@ -62,21 +62,11 @@ pipeline {
             // Integration test commands using the environment variable
             }
         }
-        stage('Deploy to Production') {
-            steps {
-                echo "Deploying ${env.APP_NAME} to AWS EC2 instance server: ${env.PRODUCTION_SERVER}..."
-            // Deployment commands using the environment variables
-            }
+    stage('Deploy to Production') {
+        steps {
+            echo "Deploying ${env.APP_NAME} to AWS EC2 instance server: ${env.PRODUCTION_SERVER}..."
+        // Deployment commands using the environment variables
         }
     }
-<<<<<<< HEAD
-    stage('Deploy to Production') {
-      steps {
-        echo "Deploying ${env.APP_NAME} to AWS EC2 instance server: ${env.PRODUCTION_SERVER}..."
-        // Deployment commands using the environment variables
-      }
-    }
-  }
-=======
->>>>>>> 78ba339 (new jenkinsfile)
 }
+
