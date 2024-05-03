@@ -42,8 +42,6 @@ pipeline {
             )
           }
         }
-      }
-    }
     stage('Deploy to Staging') {
       steps {
         echo "Deploying ${env.APP_NAME} to an AWS EC2 instance server: ${env.STAGING_SERVER}..."
