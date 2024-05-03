@@ -33,13 +33,7 @@ pipeline {
       steps {
         echo "Performing security scan for ${env.APP_NAME} using OWASP ZAP..."
         // Security scan commands using the environment variable
-
-            emailext (
-              subject: "Security Scan successful - ${env.APP_NAME} [${env.BUILD_NUMBER}]",
-              body: "The security scan for ${env.APP_NAME} [${env.BUILD_NUMBER}] has succeeded. Please take necessary action.",
-              to: "${env.EMAIL_RECIPIENT}",
-              attachLog: true
-            )
+            emailext body: 'Scan executed successfully.', subject: 'Pipeline Success', to: 's223844277@deakin.edu.au'
           }
         }
     stage('Deploy to Staging') {
@@ -52,6 +46,9 @@ pipeline {
       steps {
         echo "Running integration tests on ${env.STAGING_SERVER}..."
         echo "Running end-to-end tests on ${env.STAGING_SERVER}..."
+
+        emailext body: 'Tests executed successfully.', subject: 'Pipeline Success', to: 's223844277@deakin.edu.au'
+
         // Integration test commands using the environment variable
       }
     }
