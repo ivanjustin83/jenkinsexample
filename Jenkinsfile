@@ -31,9 +31,16 @@ pipeline {
     }
     stage('Security Scan') {
       steps {
-        echo "Performing security scan for ${env.APP_NAME} using OWASP ZAP..."
-        // Security scan commands using the environment variable
-            emailext body: 'Scan executed successfully.', subject: 'Pipeline Success', to: 's223844277@deakin.edu.au'
+        // Perform the security scan
+        sh 'security_scan_command' // Replace with the actual command for the security scan
+
+            // Send email notification for security scan failure
+            emailext (
+              subject: "Security Scan Failed - ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
+              body: "The security scan for ${env.JOB_NAME} [${env.BUILD_NUMBER}] has failed. Please take necessary action.",
+              to: "s223844277@deakin.edu.au",
+              attachLog: true
+            )
           }
         }
     stage('Deploy to Staging') {
