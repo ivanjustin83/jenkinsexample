@@ -32,7 +32,6 @@ pipeline {
         stage('Security Scan') {
             steps {
                 // Perform the security scan
-                sh 'security_scan_command' // Replace with the actual command for the security scan
 
                 // Send email notification for security scan failure
                 emailext(
