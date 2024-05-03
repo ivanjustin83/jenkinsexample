@@ -1,51 +1,68 @@
 pipeline {
   agent any
 
+  environment {
+    // Define environment variables
+    APP_NAME = 'MyApp'
+    STAGING_SERVER = 'staging.example.com'
+    PRODUCTION_SERVER = 'production.example.com'
+    EMAIL_RECIPIENT = 's223844277@deakin.edu.au'
+  }
+
   stages {
     stage('Build') {
       steps {
-        echo 'Building the code using Maven...'
-        // Additional build commands
+        echo "Building ${env.APP_NAME} using Maven..."
+        // Build commands using the environment variable
       }
     }
     stage('Unit and Integration Tests') {
       steps {
-        echo 'Running unit tests...'
-        // Additional unit test commands
-
-        echo 'Running integration tests...'
-        // Additional integration test commands
+        echo "Running unit tests for ${env.APP_NAME}..."
+        echo "Running integration tests for ${env.APP_NAME}..."
+        // Test commands using the environment variable
       }
     }
     stage('Code Analysis') {
       steps {
-        echo 'Running code analysis with SonarQube...'
-        // Additional code analysis commands
+        echo "Running code analysis for ${env.APP_NAME} using SonarQube..."
+        // Code analysis commands using the environment variable
       }
     }
     stage('Security Scan') {
       steps {
-        echo 'Performing security scan with OWASP ZAP...'
-        // Additional security scan commands
+        echo "Performing security scan for ${env.APP_NAME} using OWASP ZAP..."
+        // Security scan commands using the environment variable
+
+            emailext (
+              subject: "Security Scan successful - ${env.APP_NAME} [${env.BUILD_NUMBER}]",
+              body: "The security scan for ${env.APP_NAME} [${env.BUILD_NUMBER}] has succeeded. Please take necessary action.",
+              to: "${env.EMAIL_RECIPIENT}",
+              attachLog: true
+            )
+          }
+        }
       }
     }
     stage('Deploy to Staging') {
       steps {
-        echo 'Deploying the application to the staging server...'
-        // Additional deployment commands
+        echo "Deploying ${env.APP_NAME} to an AWS EC2 instance server: ${env.STAGING_SERVER}..."
+        // Deployment commands using the environment variables
       }
     }
     stage('Integration Tests on Staging') {
       steps {
-        echo 'Running integration tests on the staging environment...'
-        // Additional integration test commands
+        echo "Running integration tests on ${env.STAGING_SERVER}..."
+        echo "Running end-to-end tests on ${env.STAGING_SERVER}..."
+        // Integration test commands using the environment variable
       }
     }
     stage('Deploy to Production') {
       steps {
-        echo 'Deploying the application to the production server...'
-        // Additional deployment commands
+        echo "Deploying ${env.APP_NAME} to AWS EC2 instance server: ${env.PRODUCTION_SERVER}..."
+        // Deployment commands using the environment variables
       }
     }
   }
+}
 }
